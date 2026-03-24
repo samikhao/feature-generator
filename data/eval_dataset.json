@@ -1,0 +1,74 @@
+[
+  {
+    "case_id": "churn_basic",
+    "request": {
+      "project_goal": "Predict customer churn",
+      "target_name": "churn",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "age",
+          "dtype": "numeric",
+          "description": "Customer age"
+        },
+        {
+          "name": "monthly_spend",
+          "dtype": "numeric",
+          "description": "Average monthly spend"
+        },
+        {
+          "name": "tenure_months",
+          "dtype": "numeric",
+          "description": "Months since subscription start"
+        }
+      ],
+      "dataset_context": "Telecom customer dataset",
+      "constraints": [
+        "avoid target leakage",
+        "prefer interpretable features"
+      ],
+      "temperature": 0.2
+    }
+  },
+  {
+    "case_id": "sales_regression",
+    "request": {
+      "project_goal": "Predict next month sales for each store",
+      "target_name": "next_month_sales",
+      "target_type": "regression",
+      "columns": [
+        {
+          "name": "store_id",
+          "dtype": "categorical",
+          "description": "Store identifier"
+        },
+        {
+          "name": "region",
+          "dtype": "categorical",
+          "description": "Store region"
+        },
+        {
+          "name": "current_month_sales",
+          "dtype": "numeric",
+          "description": "Current month sales volume"
+        },
+        {
+          "name": "promo_days",
+          "dtype": "numeric",
+          "description": "Number of promotion days in the current month"
+        },
+        {
+          "name": "month",
+          "dtype": "datetime",
+          "description": "Month of observation"
+        }
+      ],
+      "dataset_context": "Retail chain monthly aggregated data",
+      "constraints": [
+        "avoid target leakage",
+        "return practical features that can be built in SQL"
+      ],
+      "temperature": 0.2
+    }
+  }
+]
