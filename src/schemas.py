@@ -89,6 +89,19 @@ class UsageMetrics(BaseModel):
     total_tokens: int
 
 
+class RetrievalItem(BaseModel):
+    title: str
+    score: float
+    source: str
+
+
+class RetrievalAudit(BaseModel):
+    enabled: bool
+    query: str
+    source: str
+    items: list[RetrievalItem]
+
+
 class GenerationAudit(BaseModel):
     schema_version: str
     prompt_version: str
@@ -96,6 +109,7 @@ class GenerationAudit(BaseModel):
     applied_constraints: list[str]
     rejected_feature_ideas: list[str]
     usage: UsageMetrics
+    retrieval: RetrievalAudit
 
 
 class FeatureGenerationResponse(FeatureGenerationResult):

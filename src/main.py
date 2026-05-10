@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 
 from src.llm import generate_plan
 from src.prompts import PROMPT_SPECS, build_user_prompt, get_prompt_spec
+from src.retriever import retrieve_knowledge
 from src.schemas import (
     FeatureGenerationRequest,
     FeatureGenerationResponse,
@@ -49,7 +50,12 @@ def run_feature_generation(
     prompt_version: str | None = None,
 ) -> FeatureGenerationResponse:
     prompt_spec = get_prompt_spec(prompt_version)
-    user_prompt = build_user_prompt(payload, prompt_version=prompt_spec.version)
+    retrieval = retrieve_knowledge(payload)
+    user_prompt = build_user_prompt(
+        payload,
+        prompt_version=prompt_spec.version,
+        retrieval=retrieval,
+    )
     plan, usage_metrics = generate_plan(
         system_prompt=prompt_spec.system_prompt,
         user_prompt=user_prompt,
@@ -69,5 +75,6 @@ def run_feature_generation(
         applied_constraints=plan.constraint_checklist,
         rejected_feature_ideas=rejected_feature_ideas,
         usage=usage_metrics,
+        retrieval=retrieval,
     ).model_dump()
     return FeatureGenerationResponse.model_validate(response_payload)

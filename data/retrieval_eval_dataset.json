@@ -1,0 +1,335 @@
+[
+  {
+    "case_id": "churn_numeric_interpretable",
+    "description": "Telecom churn with numeric customer metadata and interpretability constraints.",
+    "request": {
+      "project_goal": "Predict customer churn",
+      "target_name": "churn",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "age",
+          "dtype": "numeric",
+          "description": "Customer age in years"
+        },
+        {
+          "name": "monthly_spend",
+          "dtype": "numeric",
+          "description": "Average monthly spend"
+        },
+        {
+          "name": "tenure_months",
+          "dtype": "numeric",
+          "description": "Months since subscription start"
+        }
+      ],
+      "dataset_context": "Telecom customer dataset",
+      "constraints": [
+        "avoid target leakage",
+        "prefer interpretable features"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Avoid Identity Features",
+      "Global Rule: Respect Target Leakage Constraints",
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Bucketed Numeric Features",
+      "Rule: Logarithmic Magnitude Features",
+      "Rule: Numeric Product and Interaction Features"
+    ]
+  },
+  {
+    "case_id": "housing_regression_ratios",
+    "description": "Property price prediction with obvious ratio and difference candidates.",
+    "request": {
+      "project_goal": "Predict apartment sale price",
+      "target_name": "sale_price",
+      "target_type": "regression",
+      "columns": [
+        {
+          "name": "area_sq_m",
+          "dtype": "numeric",
+          "description": "Apartment area in square meters"
+        },
+        {
+          "name": "rooms",
+          "dtype": "numeric",
+          "description": "Number of rooms"
+        },
+        {
+          "name": "floor",
+          "dtype": "numeric",
+          "description": "Current floor"
+        },
+        {
+          "name": "building_floors",
+          "dtype": "numeric",
+          "description": "Total number of floors in the building"
+        }
+      ],
+      "dataset_context": "Residential real estate listings",
+      "constraints": [
+        "prefer interpretable features",
+        "avoid using the target as a source"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Avoid Identity Features",
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Numeric Ratio Features",
+      "Rule: Numeric Difference Features",
+      "Rule: Numeric Product and Interaction Features"
+    ]
+  },
+  {
+    "case_id": "transaction_fraud_temporal",
+    "description": "Fraud detection with event timestamps, merchant metadata and strong leakage risk.",
+    "request": {
+      "project_goal": "Predict whether a card transaction is fraudulent",
+      "target_name": "is_fraud",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "transaction_timestamp",
+          "dtype": "datetime",
+          "description": "Timestamp of the current transaction"
+        },
+        {
+          "name": "transaction_amount",
+          "dtype": "numeric",
+          "description": "Amount of the transaction"
+        },
+        {
+          "name": "merchant_id",
+          "dtype": "categorical",
+          "description": "Merchant identifier"
+        },
+        {
+          "name": "user_id",
+          "dtype": "categorical",
+          "description": "Customer identifier"
+        }
+      ],
+      "dataset_context": "Card payments stream with historical transactions per user and merchant",
+      "constraints": [
+        "avoid target leakage",
+        "use only information available before the current transaction"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Respect Target Leakage Constraints",
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Aggregation Features by Entity",
+      "Rule: Count Features",
+      "Rule: Frequency and Rate Features",
+      "Rule: Rolling Window Features",
+      "Rule: Temporal Date Part Features",
+      "Rule: Temporal Recency Features"
+    ]
+  },
+  {
+    "case_id": "support_text_intent",
+    "description": "Churn prediction from support tickets with text and timestamps.",
+    "request": {
+      "project_goal": "Predict whether a customer will churn after support interactions",
+      "target_name": "churn",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "ticket_text",
+          "dtype": "text",
+          "description": "Free text from the support ticket"
+        },
+        {
+          "name": "created_at",
+          "dtype": "datetime",
+          "description": "Ticket creation timestamp"
+        },
+        {
+          "name": "customer_id",
+          "dtype": "categorical",
+          "description": "Customer identifier"
+        }
+      ],
+      "dataset_context": "Customer support history with repeated contacts over time",
+      "constraints": [
+        "avoid leakage",
+        "prefer practical and interpretable features"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Respect Target Leakage Constraints",
+      "Rule: Aggregation Features by Entity",
+      "Rule: Count Features",
+      "Rule: Rolling Window Features",
+      "Rule: Temporal Date Part Features",
+      "Rule: Temporal Recency Features",
+      "Rule: Text Keyword Flags",
+      "Rule: Text Metadata Length Features"
+    ]
+  },
+  {
+    "case_id": "ecommerce_combo",
+    "description": "Purchase propensity model with multiple categorical descriptors.",
+    "request": {
+      "project_goal": "Predict whether a session ends with a purchase",
+      "target_name": "purchase",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "country",
+          "dtype": "categorical",
+          "description": "Customer country"
+        },
+        {
+          "name": "device_type",
+          "dtype": "categorical",
+          "description": "Device used during the session"
+        },
+        {
+          "name": "traffic_source",
+          "dtype": "categorical",
+          "description": "Marketing channel that brought the session"
+        }
+      ],
+      "dataset_context": "E-commerce session metadata",
+      "constraints": [
+        "prefer interpretable features"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Avoid Identity Features",
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Categorical Combination Features",
+      "Rule: Semantic Category Grouping"
+    ]
+  },
+  {
+    "case_id": "retention_recency",
+    "description": "Subscription retention with account lifecycle dates.",
+    "request": {
+      "project_goal": "Predict subscription renewal",
+      "target_name": "renewed",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "signup_date",
+          "dtype": "datetime",
+          "description": "Account signup date"
+        },
+        {
+          "name": "last_login_at",
+          "dtype": "datetime",
+          "description": "Timestamp of the last login before scoring"
+        },
+        {
+          "name": "plan_type",
+          "dtype": "categorical",
+          "description": "Subscription plan"
+        }
+      ],
+      "dataset_context": "Subscription service lifecycle data",
+      "constraints": [
+        "avoid target leakage",
+        "only use information known before the renewal decision"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Respect Target Leakage Constraints",
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Temporal Date Part Features",
+      "Rule: Temporal Recency Features",
+      "Rule: Temporal Duration Features"
+    ]
+  },
+  {
+    "case_id": "claims_entity_aggregation",
+    "description": "Insurance claim risk with historical entity-level behavior.",
+    "request": {
+      "project_goal": "Predict whether a new insurance claim will be approved",
+      "target_name": "approved",
+      "target_type": "binary",
+      "columns": [
+        {
+          "name": "policy_id",
+          "dtype": "categorical",
+          "description": "Insurance policy identifier"
+        },
+        {
+          "name": "customer_id",
+          "dtype": "categorical",
+          "description": "Customer identifier"
+        },
+        {
+          "name": "claim_amount",
+          "dtype": "numeric",
+          "description": "Requested claim amount"
+        },
+        {
+          "name": "claim_date",
+          "dtype": "datetime",
+          "description": "Date when the claim was submitted"
+        }
+      ],
+      "dataset_context": "Claims history with repeated claims per customer and policy",
+      "constraints": [
+        "avoid target leakage",
+        "use only claim history available before the current claim"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Respect Target Leakage Constraints",
+      "Rule: Aggregation Features by Entity",
+      "Rule: Count Features",
+      "Rule: Frequency and Rate Features",
+      "Rule: Group Comparison Features",
+      "Rule: Rolling Window Features",
+      "Rule: Temporal Recency Features"
+    ]
+  },
+  {
+    "case_id": "review_regression_text",
+    "description": "Review usefulness score regression from text metadata.",
+    "request": {
+      "project_goal": "Predict the usefulness score of a product review",
+      "target_name": "usefulness_score",
+      "target_type": "regression",
+      "columns": [
+        {
+          "name": "review_text",
+          "dtype": "text",
+          "description": "Review body text"
+        },
+        {
+          "name": "review_title",
+          "dtype": "text",
+          "description": "Review title"
+        },
+        {
+          "name": "created_at",
+          "dtype": "datetime",
+          "description": "Review creation timestamp"
+        }
+      ],
+      "dataset_context": "User reviews for online products",
+      "constraints": [
+        "prefer interpretable features",
+        "avoid target leakage"
+      ],
+      "temperature": 0.2
+    },
+    "relevant_titles": [
+      "Global Rule: Match Feature Ideas to Target Type",
+      "Rule: Temporal Date Part Features",
+      "Rule: Text Keyword Flags",
+      "Rule: Text Metadata Length Features"
+    ]
+  }
+]

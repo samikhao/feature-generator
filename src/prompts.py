@@ -1,7 +1,7 @@
 import json
 from dataclasses import dataclass
 
-from src.schemas import FeatureGenerationRequest
+from src.schemas import FeatureGenerationRequest, RetrievalAudit
 
 
 @dataclass(frozen=True)
@@ -166,6 +166,7 @@ def get_prompt_spec(version: str | None) -> PromptSpec:
 def build_user_prompt(
     payload: FeatureGenerationRequest,
     prompt_version: str | None = None,
+    retrieval: RetrievalAudit | None = None,
 ) -> str:
     spec = get_prompt_spec(prompt_version)
     columns_json = json.dumps(
@@ -179,6 +180,11 @@ def build_user_prompt(
         indent=2,
     )
     dataset_context = payload.dataset_context or "Not provided"
+    retrieved_context = "No additional knowledge provided."
+    if retrieval is not None:
+        from src.retriever import format_retrieved_context
+
+        retrieved_context = format_retrieved_context(retrieval)
 
     if spec.version == "baseline":
         return f"""
@@ -199,6 +205,9 @@ Dataset context:
 
 Constraints:
 {constraints_json}
+
+Relevant feature engineering knowledge:
+{retrieved_context}
 
 Return:
 - short summary
@@ -223,6 +232,10 @@ type: {payload.target_type}
 
 ## CONSTRAINTS
 {constraints_json}
+
+## RETRIEVED KNOWLEDGE
+Use these knowledge base sections as supporting rules. Prefer them when they fit the task, but do not invent unavailable data.
+{retrieved_context}
 
 ## REQUIRED OUTPUT OBJECT
 - task_understanding
