@@ -1,0 +1,51 @@
+[
+  {
+    "scenario_id": "churn_feature_review",
+    "user_message": "Изучи файл data/customer_churn_sample.csv. Посмотри на реальные значения в столбцах, оцени числовые признаки, распределение таргета churn и коротко скажи, какие фичи стоит попробовать.",
+    "expected_tools": [
+      "load_dataset_preview",
+      "profile_columns",
+      "analyze_target_column"
+    ],
+    "required_keywords": [
+      "customer_id",
+      "churn",
+      "бинар",
+      "monthly_spend",
+      "tenure",
+      "фич"
+    ]
+  },
+  {
+    "scenario_id": "loan_quality_review",
+    "user_message": "Проанализируй data/loan_risk_sample.csv. Найди проблемы качества данных, посмотри на target defaulted и сделай краткие выводы по полезным направлениям для feature engineering.",
+    "expected_tools": [
+      "analyze_data_quality",
+      "analyze_target_column"
+    ],
+    "required_keywords": [
+      "defaulted",
+      "бинар",
+      "качест",
+      "идентификатор",
+      "доход",
+      "долг"
+    ]
+  },
+  {
+    "scenario_id": "missing_values_review",
+    "user_message": "Проверь data/customer_churn_missing_sample.csv на пропуски и проблемы качества, оцени target churn и кратко опиши, на какие колонки стоит обратить внимание.",
+    "expected_tools": [
+      "analyze_data_quality",
+      "analyze_target_column"
+    ],
+    "required_keywords": [
+      "пропуск",
+      "churn",
+      "бинар",
+      "monthly_spend",
+      "tenure",
+      "support"
+    ]
+  }
+]
